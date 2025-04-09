@@ -14,10 +14,16 @@
         name: ansible
         groups: sudo
         append: yes
-
-    - name: Set password for 'ansible' user (optional)
+      when: "'ubuntu' in group_names"
+    - name: Add 'ansible' user to the sudo group RHEL
       user:
         name: ansible
-        password: "{{ '$6$KSOMC2LzK1W.NgeB$EQ0LbfsejOIizJxjrZfmoMw9azohc9rgA/1HF7/IdQEou7c6YWHm73wVPMZQG1C93ZEg5w6K5bvkCQTaCiAPN1' }}"
+        groups: wheel
+        append: yes
+      when: "'RHEL' in group_names"
+    - name: Set password for 'ansible' user 
+      user:
+        name: ansible
+        password: "$6$KSOMC2LzK1W.NgeB$EQ0LbfsejOIizJxjrZfmoMw9azohc9rgA/1HF7/IdQEou7c6YWHm73wVPMZQG1C93ZEg5w6K5bvkCQTaCiAPN1"
         update_password: on_create
       when: ansible_password is defined
