@@ -31,6 +31,12 @@
         url: "{{ checkmk_server }}/agents/{{ rpm_agent }}"
         dest: "/tmp/{{ rpm_agent }}"
 
+    - name: Import Checkmk GPG key
+      when: ansible_os_family == "RedHat"
+      rpm_key:
+        state: present
+        key: "https://download.checkmk.com/checkmk/Check_MK-pubkey.gpg"
+
     - name: Install Checkmk agent on RedHat
       when: ansible_os_family == "RedHat"
       yum:
