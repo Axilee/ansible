@@ -1,0 +1,39 @@
+---
+- name: Install Checkmk Agent
+  hosts: all
+  become: true
+  vars:
+    checkmk_server: "http://192.168.100.7/homelab/check_mk"
+    deb_agent: "check-mk-agent_2.4.0b4-1_all.deb"
+    rpm_agent: "check-mk-agent-2.4.0b4-1.noarch.rpm"
+  
+  tasks:
+    - name: Install required packages for downloading
+      package:
+        name: curl
+        state: present
+
+    - name: Download Checkmk agent for Debian-based systems
+      when: ansible_os_family == "Debian"
+      get_url:
+        url: "{{ checkmk_server }}/agents/{{ deb_agent }}"
+        dest: "/tmp/{{ deb_agent }}"
+
+    - name: Install Checkmk agent on Debian
+      when: ansible_os_family == "Debian"
+      apt:
+        deb: "/tmp/{{ deb_agent }}"
+        state: present
+
+    - name: Download Checkmk agent for RedHat-based systems
+      when: ansible_os_family == "RedHat"
+      get_url:
+        url: "{{ checkmk_server }}/agents/{{ rpm_agent }}"
+        dest: "/tmp/{{ rpm_agent }}"
+
+    - name: Install Checkmk agent on RedHat
+      when: ansible_os_family == "RedHat"
+      yum:
+        name: "/tmp/{{ rpm_agent }}"
+        state: present
+ 
