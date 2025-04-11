@@ -43,14 +43,19 @@
         name: "/tmp/{{ rpm_agent }}"
         state: present
  
-    - name: Add host to Checkmk via API
+    - name: Add host to Checkmk via REST API
       uri:
-        url: "http://192.168.100.7/homelab/check_mk/webapi.py?action=add_host&_username=automat&_secret=7RV4)Up1i4igE6&P"
+        url: "http://192.168.100.7/homelab/check_mk/api/objects/host_config/host"
         method: POST
+        headers:
+          Authorization: "Bearer {{ checkmk_api_token }}"
+          Accept: "application/json"
+          Content-Type: "application/json"
         body_format: json
         body:
-          hostname: "{{ inventory_hostname }}"
+          id: "{{ inventory_hostname }}"
           folder: "/"
           attributes:
             ipaddress: "{{ ansible_host }}"
         status_code: 200
+
