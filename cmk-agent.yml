@@ -47,11 +47,8 @@
       uri:
         url: "http://192.168.100.7/homelab/api/1.0/domain-types/rule/collections/all"
         method: POST
-        headers:
-          Authorization: "Bearer {{ checkmk_api_token }}"
-          Accept: "application/json"
-          Content-Type: "application/json"
-        body_format: json
+        user: "automat"
+        force_basic_auth: yes
         body:
           id: "{{ inventory_hostname }}"
           folder: "/"
