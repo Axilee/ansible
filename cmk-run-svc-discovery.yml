@@ -41,6 +41,5 @@
           Accept: "application/json"
         body_format: json
         body:
-          allow_foreign_changes: true
-          comment: "Activated changes via AWX"
-        status_code: 200
+          redirect: "true"
+        status_code: [200, 303]
