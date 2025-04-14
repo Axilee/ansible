@@ -27,9 +27,9 @@
         force_basic_auth: yes
         headers:
           Accept: "application/json"
-        status_code: 200
+        status_code: [200, 204]
       register: completion_result
-      
+
     - name: Activate pending changes in Checkmk
       uri:
         url: "http://192.168.100.7/homelab/check_mk/api/1.0/domain-types/activation_run/actions/activate-changes/invoke"
