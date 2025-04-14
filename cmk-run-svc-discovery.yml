@@ -4,7 +4,7 @@
   tasks:
     - name: Run service discovery in Checkmk
       uri:
-        url: "http://192.168.100.7/homelab/check_mk/api/1.0/domain-types/discovery_run/actions/start/invoke"
+        url: "http://192.168.100.7/homelab/check_mk/api/1.0/domain-types/service_discovery_run/actions/start/invoke"
         method: POST
         user: "automat"
         password: "S4EqMt%dSnPXh1lV"
@@ -14,6 +14,7 @@
         body_format: json
         body:
           host_name: "{{ inventory_hostname }}"
+          mode: "refresh"
         status_code: 200
 
     - name: Activate pending changes in Checkmk
