@@ -41,6 +41,7 @@
           Accept: "application/json"
         body_format: json
         body:
+          force_foreign_changes: "true"
           sites: ["homelab"]
           redirect: "true"
         status_code: [200, 303]
