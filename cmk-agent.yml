@@ -37,7 +37,7 @@
     - name: Install snmpd
       when: ansible_os_family == "RedHat"
       ansible.builtin.package:
-        name: snmpd
+        name: net-snmp
         state: present
     - name: Enable snmpd Redhat
       when: ansible_os_family == "RedHat"
