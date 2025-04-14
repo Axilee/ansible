@@ -15,8 +15,21 @@
         body:
           host_name: "{{ inventory_hostname }}"
           mode: "refresh"
-        status_code: 200
+        status_code: [200,303]
+      register: discovery_result
 
+    - name: Wait for service discovery completion
+      uri:
+        url: "http://192.168.100.7/homelab/check_mk/api/1.0/objects/service_discovery_run/{{ inventory_hostname }}/actions/wait-for-completion/invoke"
+        method: GET
+        user: "automat"
+        password: "S4EqMt%dSnPXh1lV"
+        force_basic_auth: yes
+        headers:
+          Accept: "application/json"
+        status_code: 200
+      register: completion_result
+      
     - name: Activate pending changes in Checkmk
       uri:
         url: "http://192.168.100.7/homelab/check_mk/api/1.0/domain-types/activation_run/actions/activate-changes/invoke"
