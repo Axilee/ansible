@@ -1,8 +1,8 @@
 ---
-- name: run service discovery 
+- name: Run service discovery and activate changes in Checkmk
+  hosts: all
   tasks:
     - name: Run service discovery in Checkmk
-      hosts: all
       uri:
         url: "http://192.168.100.7/homelab/check_mk/api/1.0/domain-types/discovery_run/actions/start/invoke"
         method: POST
@@ -15,6 +15,7 @@
         body:
           host_name: "{{ inventory_hostname }}"
         status_code: 200
+
     - name: Activate pending changes in Checkmk
       uri:
         url: "http://192.168.100.7/homelab/check_mk/api/1.0/domain-types/activation_run/actions/activate-changes/invoke"
