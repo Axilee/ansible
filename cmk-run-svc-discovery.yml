@@ -1,5 +1,5 @@
 - name: Run service discovery in Checkmk
-  hotsts: all
+  hosts: all
   uri:
     url: "http://192.168.100.7/homelab/check_mk/api/1.0/domain-types/discovery_run/actions/start/invoke"
     method: POST
