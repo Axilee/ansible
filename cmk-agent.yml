@@ -54,7 +54,7 @@
         force_basic_auth: yes
         body_format: json
         body:
-          id: "{{ inventory_hostname }}"
+          host_name: "{{ inventory_hostname }}"
           folder: "/"
           attributes:
             ipaddress: "{{ ansible_host }}"
