@@ -48,7 +48,7 @@
         url: "http://192.168.100.7/homelab/api/1.0/domain-types/rule/collections/all"
         method: POST
         user: "automat"
-        password: "{{ checkmk_api_token }}"
+        password: "U8bKxh&RmK6!Sv)T"
         force_basic_auth: yes
         body_format: json
         body:
