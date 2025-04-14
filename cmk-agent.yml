@@ -34,6 +34,12 @@
       get_url:
         url: "{{ checkmk_server }}/agents/{{ rpm_agent }}"
         dest: "/tmp/{{ rpm_agent }}"
+    - name: Enable snmpd Redhat
+      when: ansible_os_family == "RedHat"
+      ansible.builtin.service:
+        name: snmpd
+        state: started
+        enabled: yes
 
     - name: Import Checkmk GPG key
       when: ansible_os_family == "RedHat"
