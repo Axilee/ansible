@@ -41,5 +41,7 @@
           Accept: "application/json"
         body_format: json
         body:
+          sites: ["homelab"]
+          comment: "Automated activation via Ansible"
           redirect: "true"
         status_code: [200, 303]
