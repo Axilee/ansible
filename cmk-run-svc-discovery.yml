@@ -1,30 +1,31 @@
 ---
-tasks:
-- name: Run service discovery in Checkmk
-  hosts: all
-  uri:
-    url: "http://192.168.100.7/homelab/check_mk/api/1.0/domain-types/discovery_run/actions/start/invoke"
-    method: POST
-    user: "automat"
-    password: "S4EqMt%dSnPXh1lV"
-    force_basic_auth: yes
-    headers:
-      Accept: "application/json"
-    body_format: json
-    body:
-      host_name: "{{ inventory_hostname }}"
-    status_code: 200
-- name: Activate pending changes in Checkmk
-  uri:
-    url: "http://192.168.100.7/homelab/check_mk/api/1.0/domain-types/activation_run/actions/activate-changes/invoke"
-    method: POST
-    user: "automat"
-    password: "S4EqMt%dSnPXh1lV"
-    force_basic_auth: yes
-    headers:
-      Accept: "application/json"
-    body_format: json
-    body:
-      allow_foreign_changes: true
-      comment: "Activated changes via AWX"
-    status_code: 200
+- name: run service discovery 
+  tasks:
+  - name: Run service discovery in Checkmk
+    hosts: all
+    uri:
+      url: "http://192.168.100.7/homelab/check_mk/api/1.0/domain-types/discovery_run/actions/start/invoke"
+      method: POST
+      user: "automat"
+      password: "S4EqMt%dSnPXh1lV"
+      force_basic_auth: yes
+      headers:
+        Accept: "application/json"
+      body_format: json
+      body:
+        host_name: "{{ inventory_hostname }}"
+      status_code: 200
+  - name: Activate pending changes in Checkmk
+    uri:
+      url: "http://192.168.100.7/homelab/check_mk/api/1.0/domain-types/activation_run/actions/activate-changes/invoke"
+      method: POST
+      user: "automat"
+      password: "S4EqMt%dSnPXh1lV"
+      force_basic_auth: yes
+      headers:
+        Accept: "application/json"
+      body_format: json
+      body:
+        allow_foreign_changes: true
+        comment: "Activated changes via AWX"
+      status_code: 200
