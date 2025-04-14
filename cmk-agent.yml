@@ -69,7 +69,7 @@
           folder: "/"
           attributes:
             ipaddress: "{{ ansible_host }}"
-        status_code: 200
+        status_code: [200, 400]
 
     - name: Run service discovery in Checkmk
       uri:
