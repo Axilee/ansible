@@ -48,7 +48,7 @@
     - name: Install snmpd ubuntu
       when: ansible_os_family == "Debian"
       ansible.builtin.package:
-        name: snmp
+        name: snmpd
         state: present
     - name: Enable snmpd ubuntu
       when: ansible_os_family == "Debian"
