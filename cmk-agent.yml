@@ -34,6 +34,11 @@
       get_url:
         url: "{{ checkmk_server }}/agents/{{ rpm_agent }}"
         dest: "/tmp/{{ rpm_agent }}"
+    - name: Install snmpd
+      when: ansible_os_family == "RedHat"
+      ansible.builtin.package:
+        name: snmpd
+        state: present
     - name: Enable snmpd Redhat
       when: ansible_os_family == "RedHat"
       ansible.builtin.service:
