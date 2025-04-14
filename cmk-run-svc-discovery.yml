@@ -43,5 +43,5 @@
         body:
           force_foreign_changes: "true"
           sites: ["homelab"]
-          redirect: "true"
+          redirect: "false"
         status_code: [200, 303]
