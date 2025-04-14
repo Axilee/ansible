@@ -1,3 +1,5 @@
+---
+tasks:
 - name: Run service discovery in Checkmk
   hosts: all
   uri:
