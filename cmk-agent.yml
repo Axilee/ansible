@@ -45,7 +45,7 @@
  
     - name: Add host to Checkmk via REST API
       uri:
-        url: "http://192.168.100.7/homelab/api/1.0/domain-types/host_config/collections/all" 
+        url: "http://192.168.100.7/homelab/check_mk/api/1.0/domain-types/host_config/collections/all" 
         method: POST
         user: "automat"
         password: "S4EqMt%dSnPXh1lV"
