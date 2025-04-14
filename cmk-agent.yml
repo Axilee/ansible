@@ -6,7 +6,11 @@
     checkmk_server: "http://192.168.100.7/homelab/check_mk"
     deb_agent: "check-mk-agent_2.4.0b4-1_all.deb"
     rpm_agent: "check-mk-agent-2.4.0b4-1.noarch.rpm"
-  
+  handlers:
+  - name: Reload Firewalld
+    ansible.builtin.service:
+      name: firewalld
+      state: reloaded
   tasks:
     - name: Install required packages for downloading
       package:
