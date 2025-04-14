@@ -37,6 +37,7 @@
         state: present
         key: "https://download.checkmk.com/checkmk/Check_MK-pubkey.gpg"
     - name: Open port firewalld
+      when: ansible_os_family == "RedHat"
       ansible.posix.firewalld:
         port: 6566/tcp
         permanent: yes
