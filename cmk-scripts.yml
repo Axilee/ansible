@@ -6,7 +6,7 @@
     nfs_server: "192.168.100.4"
   tasks:
     - name: install nfs tools
-      when: ansible_os_family == "RedHat"
+      when: ansible_os_family == "Debian"
       apt:
         name: nfs-kernel-server
         state: present
@@ -20,10 +20,10 @@
       # This task will only run on hosts where the OS family is Debian.
 
     - name: Synchronize scripts from NFS to /usr/lib/check_mk_agent/local/
-      ansible.builtin.copy:
+      ansible.builtin.synchronize:
         src: "/mnt/tmp/linux/cmk-scripts/"
         dest: "/usr/lib/check_mk_agent/local/"
-        mode: '0777'
+        mode: 'pull'
         recursive: yes
         owner: yes
         group: yes
