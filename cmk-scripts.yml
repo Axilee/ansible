@@ -1,0 +1,35 @@
+---
+- name: Sync scripts from NFS to all Debian servers
+  hosts: all  # You can target all hosts here
+  become: yes
+  tasks:
+  vars:
+    nfs_server: "192.168.100.4"
+    - name: Mount the NFS share
+      ansible.builtin.mount:
+        path: /mnt/orzech
+        src: "{{ nfs_server }}:/WDRed-pool/orzech/linux/cmk-scripts/"
+        fstype: nfs
+        state: mounted
+      when: ansible_facts['os_family'] == 'Debian'
+      # This task will only run on hosts where the OS family is Debian.
+
+    - name: Synchronize scripts from NFS to /usr/lib/check_mk_agent/local/
+      ansible.builtin.synchronize:
+        src: "/mnt/orzech/"
+        dest: "/usr/lib/check_mk_agent/local/"
+        mode: '0777'
+        recursive: yes
+        owner: yes
+        group: yes
+        perms: yes
+        delete: no
+      when: ansible_facts['os_family'] == 'Debian'
+      # This task will only run on hosts where the OS family is Debian.
+
+    - name: Unmount NFS share
+      ansible.builtin.mount:
+        path: /mnt/nfs_share
+        state: absent
+      when: ansible_facts['os_family'] == 'Debian'
+      # This task will only run on hosts where the OS family is Debian.
