@@ -23,7 +23,7 @@
       ansible.builtin.synchronize:
         src: "/mnt/orzech/linux/cmk-scripts/"
         dest: "/usr/lib/check_mk_agent/local/"
-        mode: push
+        mode: pull
         recursive: yes
         owner: yes
         group: yes
