@@ -2,9 +2,9 @@
 - name: Sync scripts from NFS to all Debian servers
   hosts: all  # You can target all hosts here
   become: yes
-  tasks:
   vars:
     nfs_server: "192.168.100.4"
+  tasks:
     - name: Mount the NFS share
       ansible.builtin.mount:
         path: /mnt/orzech
