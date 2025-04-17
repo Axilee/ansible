@@ -24,11 +24,11 @@
         src: "/mnt/tmp/linux/cmk-scripts/"
         dest: "/usr/lib/check_mk_agent/local/"
         mode: 'pull'
-        recursive: yes
-        owner: yes
-        group: yes
-        perms: yes
-        delete: no
+#        recursive: yes
+#        owner: yes
+#        group: yes
+#        perms: yes
+#        delete: no
       when: ansible_facts['os_family'] == 'Debian'
       # This task will only run on hosts where the OS family is Debian.
 
