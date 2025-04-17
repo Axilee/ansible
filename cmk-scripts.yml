@@ -12,7 +12,7 @@
         state: present
     - name: Mount the NFS share
       ansible.builtin.mount:
-        path: /mnt/orzech
+        path: /mnt/tmp
         src: "{{ nfs_server }}:/WDRed-pool/orzech"
         fstype: nfs
         state: mounted
@@ -34,7 +34,7 @@
 
     - name: Unmount NFS share
       ansible.builtin.mount:
-        path: /mnt/nfs_share
+        path: /mnt/tmp
         state: absent
       when: ansible_facts['os_family'] == 'Debian'
       # This task will only run on hosts where the OS family is Debian.
