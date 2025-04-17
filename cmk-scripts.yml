@@ -6,6 +6,7 @@
     nfs_server: "192.168.100.4"
   tasks:
     - name: install nfs tools
+      when: ansible_os_family == "RedHat"
       apt:
         name: nfs-kernel-server
         state: present
