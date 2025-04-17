@@ -21,7 +21,7 @@
 
     - name: Synchronize scripts from NFS to /usr/lib/check_mk_agent/local/
       ansible.builtin.copy:
-        src: "/mnt/orzech/linux/cmk-scripts/"
+        remote-src: "/mnt/orzech/linux/cmk-scripts/"
         dest: "/usr/lib/check_mk_agent/local/"
         mode: '0777'
         recursive: yes
