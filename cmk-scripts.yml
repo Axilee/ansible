@@ -13,7 +13,7 @@
     - name: Mount the NFS share
       ansible.builtin.mount:
         path: /mnt/orzech
-        src: "{{ nfs_server }}:/WDRed-pool/orzech/linux/cmk-scripts/"
+        src: "{{ nfs_server }}:/WDRed-pool/orzech"
         fstype: nfs
         state: mounted
       when: ansible_facts['os_family'] == 'Debian'
@@ -21,7 +21,7 @@
 
     - name: Synchronize scripts from NFS to /usr/lib/check_mk_agent/local/
       ansible.builtin.synchronize:
-        src: "/mnt/orzech/"
+        src: "/mnt/orzech/linux/cmk-scripts/"
         dest: "/usr/lib/check_mk_agent/local/"
         mode: '0777'
         recursive: yes
