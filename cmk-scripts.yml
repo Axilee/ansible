@@ -13,7 +13,7 @@
     - name: Mount the NFS share
       ansible.builtin.mount:
         path: /mnt/tmp
-        src: "{{ nfs_server }}:/mnt/WDRed-pool/orzech"
+        remote-src: "{{ nfs_server }}:/mnt/WDRed-pool/orzech"
         fstype: nfs
         state: mounted
       when: ansible_facts['os_family'] == 'Debian'
