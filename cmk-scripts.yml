@@ -25,7 +25,7 @@
         src: "/mnt/tmp/linux/cmk-scripts/"
         dest: "/usr/lib/check_mk_agent/local/"
         mode: '0777'
-        remote-src: yes
+        remote_src: yes
 #        recursive: yes
 #        owner: yes
 #        group: yes
