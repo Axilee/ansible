@@ -13,7 +13,9 @@
     - name: Mount the NFS share
       ansible.posix.mount:
         path: /mnt/tmp
+        remote-src: yes
         src: "{{ nfs_server }}:/mnt/WDRed-pool/orzech"
+        
         fstype: nfs
         state: mounted
       when: ansible_facts['os_family'] == 'Debian'
