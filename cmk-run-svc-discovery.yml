@@ -2,6 +2,23 @@
 - name: Run service discovery and activate changes in Checkmk
   hosts: all
   tasks:
+    - name: Add host to Checkmk via REST API
+      uri:
+        url: "http://192.168.100.7/homelab/check_mk/api/1.0/domain-types/host_config/collections/all" 
+        method: POST
+        headers:
+          Accept: "application/json"
+        user: "automat"
+        password: "S4EqMt%dSnPXh1lV"
+        force_basic_auth: yes
+        body_format: json
+        body:
+          host_name: "{{ inventory_hostname }}"
+          folder: "/"
+          attributes:
+            ipaddress: "{{ ansible_host }}"
+        status_code: [200, 400]
+
     - name: Run service discovery in Checkmk
       uri:
         url: "http://192.168.100.7/homelab/check_mk/api/1.0/domain-types/service_discovery_run/actions/start/invoke"
