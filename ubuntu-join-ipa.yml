@@ -11,20 +11,20 @@
     hostname: "{{ ansible_fqdn }}"
   tasks:
     - name: Debug IPA client installation
-  shell: |
-    ipa-client-install --domain={{ ipa_domain }} \
-      --server={{ ipa_server }} \
-      --realm={{ ipa_realm }} \
-      --principal={{ ipa_admin_user }} \
-      --password={{ ipa_admin_password }} \
-      --hostname={{ hostname }} \
-      --mkhomedir \
-      --unattended \
-      --force-join \
-      --no-ntp \
-      --debug 2>&1
-  register: debug_result
-  failed_when: false
+      shell: |
+        ipa-client-install --domain={{ ipa_domain }} \
+          --server={{ ipa_server }} \
+          --realm={{ ipa_realm }} \
+          --principal={{ ipa_admin_user }} \
+          --password={{ ipa_admin_password }} \
+          --hostname={{ hostname }} \
+          --mkhomedir \
+          --unattended \
+          --force-join \
+          --no-ntp \
+          --debug 2>&1
+      register: debug_result
+      failed_when: false
     - name: Ensure required packages are installed
       apt:
         name:
