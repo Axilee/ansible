@@ -52,6 +52,21 @@
       environment:
         DEBIAN_FRONTEND: noninteractive
 
+    - name: Enable mkhomedir feature via authselect
+      command: authselect enable-feature with-mkhomedir
+      args:
+        creates: /etc/authselect/custom/with-mkhomedir
+      notify: restart sssd
+
+    - name: Add value to sssd.conf
+      blockinfile:
+        path: /etc/sssd/sssd.conf
+        marker: "# {mark} ANSIBLE MANAGED BLOCK: override_homedir"
+        insertafter: '^\[domain/axile\.local\]'
+        block: |
+          override_homedir = /home/%u
+      notify: restart sssd
+
     - name: Show IPA client result
       debug:
         var: ipa_result
