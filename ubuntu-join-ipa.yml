@@ -8,7 +8,6 @@
     ipa_realm: AXILE.LOCAL
     ipa_admin_user: "awx"
     ipa_admin_password: "{{ pass }}"  # Fixed variable name
-    hostname: "{{ ansible_fqdn }}"
   tasks:
     - name: Ensure required packages are installed
       apt:
@@ -36,7 +35,6 @@
         --realm={{ ipa_realm }}
         --principal={{ ipa_admin_user }}
         --password={{ ipa_admin_password }}
-        --hostname={{ hostname }}
         --mkhomedir
         --unattended
         --force-join
