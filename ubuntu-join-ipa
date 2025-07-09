@@ -1,0 +1,44 @@
+---
+- name: Join Ubuntu host to FreeIPA
+  hosts: all
+  become: true
+  vars:
+    ipa_domain: axile.local
+    ipa_server: ipa.axile.local
+    ipa_realm: AXILE.LOCAL
+    ipa_admin_user: "{{ ipa_user }}"
+    ipa_admin_password: "{{ ipa_password }}"
+    hostname: "{{ ansible_fqdn }}"
+
+  tasks:
+    - name: Ensure required packages are installed
+      apt:
+        name:
+          - freeipa-client
+          - sssd
+          - oddjob
+          - oddjob-mkhomedir
+          - adcli
+          - realmd
+          - krb5-user
+        state: present
+        update_cache: yes
+
+    - name: Join the machine to the FreeIPA domain
+      command: >
+        ipa-client-install
+        --domain={{ ipa_domain }}
+        --server={{ ipa_server }}
+        --realm={{ ipa_realm }}
+        --principal={{ ipa_admin_user }}
+        --password={{ ipa_admin_password }}
+        --hostname={{ hostname }}
+        --mkhomedir
+        --unattended
+      register: ipa_result
+      changed_when: "'Enrollment complete' in ipa_result.stdout"
+      failed_when: ipa_result.rc != 0 and "'already enrolled' not in ipa_result.stderr"
+
+    - name: Show IPA client result
+      debug:
+        var: ipa_result.stdout
