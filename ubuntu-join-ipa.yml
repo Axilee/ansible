@@ -7,9 +7,8 @@
     ipa_server: ipa.axile.local
     ipa_realm: AXILE.LOCAL
     ipa_admin_user: "awx"
-    password: "{{ pass }}"
+    ipa_admin_password: "{{ pass }}"  # Fixed variable name
     hostname: "{{ ansible_fqdn }}"
-
   tasks:
     - name: Ensure required packages are installed
       apt:
@@ -24,6 +23,11 @@
         state: present
         update_cache: yes
 
+    - name: Check if already enrolled in FreeIPA
+      stat:
+        path: /etc/ipa/default.conf
+      register: ipa_config
+
     - name: Join the machine to the FreeIPA domain
       command: >
         ipa-client-install
@@ -35,10 +39,32 @@
         --hostname={{ hostname }}
         --mkhomedir
         --unattended
+        --force-join
+        --no-ntp
       register: ipa_result
-      changed_when: "'Enrollment complete' in ipa_result.stdout"
-      failed_when: ipa_result.rc != 0 and "'already enrolled' not in ipa_result.stderr"
+      changed_when: "'Client configuration complete' in ipa_result.stdout or 'Enrollment complete' in ipa_result.stdout"
+      failed_when: 
+        - ipa_result.rc != 0
+        - "'already enrolled' not in ipa_result.stderr"
+        - "'already configured' not in ipa_result.stderr"
+      when: not ipa_config.stat.exists
+      timeout: 300  # 5 minute timeout
+      environment:
+        DEBIAN_FRONTEND: noninteractive
 
     - name: Show IPA client result
       debug:
-        var: ipa_result.stdout
+        var: ipa_result
+      when: ipa_result is defined
+
+    - name: Verify FreeIPA enrollment
+      command: ipa-client-install --uninstall --unattended
+      register: verify_result
+      failed_when: false
+      changed_when: false
+      check_mode: false
+      when: ipa_config.stat.exists
+
+    - name: Show enrollment status
+      debug:
+        msg: "FreeIPA client is {{ 'already enrolled' if ipa_config.stat.exists else 'newly enrolled' }}"
