@@ -10,8 +10,6 @@
     ipa_admin_password: "{{ pass }}"  # Fixed variable name
     hostname: "{{ ansible_fqdn }}"
   tasks:
-      register: debug_result
-      failed_when: false
     - name: Ensure required packages are installed
       apt:
         name:
