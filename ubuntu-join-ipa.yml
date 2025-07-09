@@ -59,14 +59,6 @@
         var: ipa_result
       when: ipa_result is defined
 
-    - name: Verify FreeIPA enrollment
-      command: ipa-client-install --uninstall --unattended
-      register: verify_result
-      failed_when: false
-      changed_when: false
-      check_mode: false
-      when: ipa_config.stat.exists
-
     - name: Show enrollment status
       debug:
         msg: "FreeIPA client is {{ 'already enrolled' if ipa_config.stat.exists else 'newly enrolled' }}"
