@@ -6,8 +6,8 @@
     ipa_domain: axile.local
     ipa_server: ipa.axile.local
     ipa_realm: AXILE.LOCAL
-    ipa_admin_user: "{{ ipa_user }}"
-    ipa_admin_password: "{{ ipa_password }}"
+    ipa_admin_user: "awx"
+    password: "{{ pass }}"
     hostname: "{{ ansible_fqdn }}"
 
   tasks:
